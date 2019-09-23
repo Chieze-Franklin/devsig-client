@@ -1,0 +1,29 @@
+{
+  "name": "devsig-client",
+  "version": "0.0.1",
+  "description": "client module for pushing data to the devsig server",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chieze-Franklin/devsig-client.git"
+  },
+  "keywords": [
+    "devsig",
+    "monitor",
+    "client"
+  ],
+  "author": "Franklin Chieze",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chieze-Franklin/devsig-client/issues"
+  },
+  "homepage": "https://github.com/Chieze-Franklin/devsig-client#readme",
+  "dependencies": {
+    "axios": "^0.19.0"
+  }
+}

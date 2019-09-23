@@ -1,3 +1,9 @@
+# i heard there's a better approach than using .npmignore
+# https://medium.com/@jdxcode/for-the-love-of-god-dont-use-npmignore-f93c08909d8d
+
+# ignores everything .gitignore ignores except the following:
+# dist/
+
 # Logs
 logs
 *.log
@@ -40,7 +46,7 @@ jspm_packages/
 typings/
 
 # TypeScript output files
-dist/
+# dist/ # don't ignore this; we want it pushed to npm
 
 # Optional npm cache directory
 .npm
