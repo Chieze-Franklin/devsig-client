@@ -22,7 +22,7 @@ Using require:
 const { Client } = require('devsig-client');
 ```
 
-Using yarn:
+Using import:
 ```js
 import { Client } from 'devsig-client';
 ```
@@ -35,6 +35,19 @@ const client = new Client('user1@email.com', 'client-token');
 ```
 
 After this you can start sending the user's metrics to the server.
+```js
+client.send('network.download_speed', 12.95);
+```
+
+### Getting the client token
+
+Reach out to the LearnTech team to generate a client token.
+
+## API
+
+### client.send(metric: string, value: number)
+
+This method sends a record of a metric to the server.
 ```js
 client.send('network.download_speed', 12.95);
 ```
