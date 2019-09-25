@@ -1,6 +1,6 @@
 {
   "name": "devsig-client",
-  "version": "0.1.4",
+  "version": "0.2.1",
   "description": "client module for pushing data to the devsig server",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

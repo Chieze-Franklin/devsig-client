@@ -22,9 +22,9 @@ export class Client {
         });
     }
 
-    private requests: Promise<AxiosResponse<any>>[] = [];
     private ax: AxiosInstance;
     private config: Options = {};
+    private PATH: string = '/';
     private QS: string = '';
     private RECORD_SAVE_URL: string = 'https://europe-west1-devsig.cloudfunctions.net/Records_save';
     private RECORD_SAVE_IN_PERIOD_URL: string = 'https://europe-west1-devsig.cloudfunctions.net/Records_saveInPeriod';
@@ -53,27 +53,12 @@ export class Client {
     reset(): Client {
         this.ax.defaults.baseURL = this.RECORD_SAVE_URL;
         this.config = {};
+        this.PATH = '/';
         this.QS = '';
         return this;
     }
-    metric(metric: string, value: number): Client {
-        this.requests.push(this.ax.post(this.QS || '/', {
-            email: this.user,
-            metric,
-            value,
-            date: this.config.date
-        }));
-        return this;
-    }
-    async send(metric: string, value: number, cb?: Callback) {
-        this.requests.push(this.ax.post(this.QS || '/', {
-            email: this.user,
-            metric,
-            value,
-            date: this.config.date
-        }));
-        return axios.all(this.requests);
-        this.ax.post(this.QS || '/', {
+    send(metric: string, value: number, cb?: Callback): Client {
+        this.ax.post(`${this.PATH}${this.QS}`, {
             email: this.user,
             metric,
             value,
