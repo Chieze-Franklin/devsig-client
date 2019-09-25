@@ -59,7 +59,7 @@ export class Client {
     }
     send(metric: string, value: number, cb?: Callback): Client {
         this.ax.post(`${this.PATH}${this.QS}`, {
-            email: this.user,
+            user: this.user,
             metric,
             value,
             date: this.config.date
