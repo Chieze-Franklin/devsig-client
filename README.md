@@ -132,20 +132,21 @@ Why should you use this? There are metrics you want to record once a day for a u
 ```js
 client
     .period('day')
-    .send('network.download_speed', 20); // first call creates a new record in the database
+    .send('calls_per_day', 20); // first call creates a new record in the database
 
 client
     .period('day')
-    .send('network.download_speed', 30); // next call updates the record from '20' to '30'
+    .send('calls_per_day', 30); // next call updates the record from '20' to '30'
 ```
 
 The same logic applies for other periods: `minute`, `hour`, `month`, `year`.
 ```js
-// although this loop is infinite only 1 record of 'network.download_speed'
+// although this loop is infinite only 1 record of 'calls_per_day'
 // for the current user will be created every hour
+let calls = 1;
 while (true) {
     client
         .period('hour')
-        .send('network.download_speed', 20);
+        .send('calls_per_day', calls++);
 }
 ```
