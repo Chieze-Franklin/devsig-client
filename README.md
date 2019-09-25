@@ -88,3 +88,20 @@ client
         }
     });
 ```
+
+### date(date?: Date | string): Client
+
+This method sets the date to be attached to a record. Each record has a `date` field. By default this is the actual date the record was created in the database. However, sometimes you may want to back-date a record. A use case is during weekly uploads of records on a Friday. Even though all records will be created at that date (as seen in the `createTime` field), you may want to back-date some records to reflect the actual time they were generated.
+
+#### parameters
+- **date**  
+This is a `Date` or `string` parameter that represents the date to be assigned to records.
+
+#### example
+```js
+client
+    .date('2019-09-25T13:30:00.000Z')
+    .send('network.download_speed', 12.95)
+    .date(new Date(2019, 8, 25, 14, 30, 0, 0))
+    .send('network.upload_speed', 5.94);
+```
