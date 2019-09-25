@@ -50,6 +50,24 @@ Reach out to the LearnTech team to generate a client token.
 client.send('network.download_speed', 12.95).send('network.upload_speed', 5.94);
 ```
 
+Note that chaining method calls together has exactly the same effect as calling those methods one at a time. This snippet:
+```js
+client
+    .period('minute')
+    .send('network.download_speed', 12.95)
+    .date('2019-09-25T13:30:00.000Z')
+    .period('hour')
+    .send('network.upload_speed', 5.94);
+```
+can be rewritten as
+```js
+client.period('minute');
+client.send('network.download_speed', 12.95);
+client.date('2019-09-25T13:30:00.000Z');
+client.period('hour');
+client.send('network.upload_speed', 5.94);
+```
+
 ### client.send(metric: string, value: number, cb?: Callback): Client
 
 This method sends a record of a metric to the server.
@@ -149,4 +167,17 @@ while (true) {
         .period('hour')
         .send('calls_per_day', calls++);
 }
+```
+
+### reset(): Client
+
+Each instance of the devsig client is mutable; calling functions like `date` and `period` changes the internal state of that instance. To return the instance back to its default state, call the `reset` function.
+```js
+client
+    .send('calls_per_day', 10); // creates a new record of 'calls_per_day' in the database
+    .send('calls_per_day', 20); // creates a new record of 'calls_per_day' in the database
+    .period('minute')           // modifies state
+    .send('calls_per_day', 30); // updates all records of 'calls_per_day' created in this minute
+    .reset()                    // returns state back to normal
+    .send('calls_per_day', 40); // creates a new record of 'calls_per_day' in the database
 ```
