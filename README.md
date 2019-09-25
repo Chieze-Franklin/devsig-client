@@ -105,3 +105,47 @@ client
     .date(new Date(2019, 8, 25, 14, 30, 0, 0))
     .send('network.upload_speed', 5.94);
 ```
+
+### period(period?: Period): Client
+
+A period is a time duration within which all records of a metric for a user have the same `value` (and `date`). Supported periods are:
+```ts
+export type Period = 'minute' | 'hour' | 'day' | 'month' | 'year';
+```
+
+For example, to set the values of all `network.download_speed` records for the day to `20`:
+```js
+client
+    .period('day')
+    .send('network.download_speed', 20);
+```
+
+To set the values of all `network.download_speed` records for a specific date to `20`, supply the date using the `date` function:
+```js
+client
+    .date('2019-09-25T13:30:00.000Z')
+    .period('day')
+    .send('network.download_speed', 20);
+```
+
+Why should you use this? There are metrics you want to record once a day for a user. Imagine a metric like `calls_per_day` which represents the number of calls a user has per day. You don't want to store multiple records of this metric for a user in a day. That's what the `period` function does. The first time the record is sent to the server within that day, that record is saved to the database. Every other time that record is sent within that day, no new record is saved to the database. Instead, the existing record in the database is updated with the `value` (and `date`) of the incoming record.
+```js
+client
+    .period('day')
+    .send('network.download_speed', 20); // first call creates a new record in the database
+
+client
+    .period('day')
+    .send('network.download_speed', 30); // next call updates the record from '20' to '30'
+```
+
+The same logic applies for other periods: `minute`, `hour`, `month`, `year`.
+```js
+// although this loop is infinite only 1 record of 'network.download_speed'
+// for the current user will be created every hour
+while (true) {
+    client
+        .period('hour')
+        .send('network.download_speed', 20);
+}
+```
