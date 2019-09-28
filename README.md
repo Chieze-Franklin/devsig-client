@@ -68,7 +68,10 @@ client.period('hour');
 client.send('network.upload_speed', 5.94);
 ```
 
-### client.send(metric: string, value: number, cb?: Callback): Client
+### send
+```js
+send(metric: string, value: number, cb?: Callback): Client
+```
 
 This method sends a record of a metric to the server.
 
@@ -107,7 +110,10 @@ client
     });
 ```
 
-### date(date?: Date | string): Client
+### date
+```js
+date(date?: Date | string): Client
+```
 
 This method sets the date to be attached to a record. Each record has a `date` field. By default this is the actual date the record was created in the database. However, sometimes you may want to back-date a record. A use case is during weekly uploads of records on a Friday. Even though all records will be created at that date (as seen in the `createTime` field), you may want to back-date some records to reflect the actual time they were generated.
 
@@ -124,7 +130,10 @@ client
     .send('network.upload_speed', 5.94);
 ```
 
-### period(period?: Period): Client
+### period
+```js
+period(period?: Period): Client
+```
 
 A period is a time duration within which all records of a metric for a user have the same `value` (and `date`). Supported periods are:
 ```ts
@@ -169,7 +178,10 @@ while (true) {
 }
 ```
 
-### reset(): Client
+### reset
+```js
+reset(): Client
+```
 
 Each instance of the devsig client is mutable; calling functions like `date` and `period` changes the internal state of that instance. To return the instance back to its default state, call the `reset` function.
 ```js
